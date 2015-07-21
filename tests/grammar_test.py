@@ -3,17 +3,28 @@ from unittest import TestCase
 from translator.executables.nlp.components.execution import Parallel
 from translator.executables.nlp.components.moves.demo_moves import dance
 from translator.executables.nlp.components.robot_commands import *
-from translator.executables.nlp.states import id_pool
-from translator.executables.nlp.grammar.grammar import Grammar
+from translator.executables.nlp.Type0py.grammar import Grammar
 from translator.executables.nlp.states.state import State
 
 
 __author__ = 'nina'
 
 
+class IDPool(object):
+    counter = 0.0
+    modifier = 0.1
+    base_id = 1.0
+
+    def get_float_id(self, base_id=1.0):
+        ret = base_id + self.counter
+        self.counter += self.modifier
+
+        return ret
+
 class GrammarTests(TestCase):
     def test_translate_general(self):
         gr = Grammar()
+        id_pool=IDPool()
 
         def rule(first, second, third):
             new_step = State()
